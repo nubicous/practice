@@ -1,9 +1,14 @@
+import javax.swing.*;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Crocodile extends Animal implements Comparable<Crocodile>, Predicate<Crocodile> {
+public class Crocodile extends Animal implements Comparable<Crocodile>, Predicate<Crocodile>, ActionListener {
     private final int amountOfTeeth;
+    final int adult = 6;
+    final int youngish = 3;
 
     public Crocodile(String nameInEnglish, int years, int amountOfFood, int amountOfTeeth) {
         super(nameInEnglish, years, amountOfFood);
@@ -16,9 +21,9 @@ public class Crocodile extends Animal implements Comparable<Crocodile>, Predicat
     @Override
     public void feed(){
         int foodUsage = getAmountOfFood();
-        if (getYears() < 6) {
+        if (getYears() < adult) {
             foodUsage = getAmountOfFood() / 2;
-        } else if (getYears() < 3) {
+        } else if (getYears() < youngish) {
             foodUsage = getAmountOfFood() / 4;
         }
         System.out.println("Crocodile has eaten" + foodUsage + " kg of meat");
@@ -71,6 +76,21 @@ public class Crocodile extends Animal implements Comparable<Crocodile>, Predicat
         return b.test(this);
     }
 
+
+    public void start(int interval){
+        ActionListener listener = new crocodileBaby();
+        Timer t = new Timer(interval, listener);
+        t.start();
+    }
+         public class crocodileBaby implements ActionListener {
+            public void actionPerformed(ActionEvent event){
+                System.out.println("FNDSFNKDSNFKS");
+            }
+         }
+
+    public void actionPerformed(ActionEvent event){
+        System.out.println();
+    }
 
 
 }
