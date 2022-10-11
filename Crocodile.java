@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
@@ -76,20 +75,36 @@ public class Crocodile extends Animal implements Comparable<Crocodile>, Predicat
         return b.test(this);
     }
 
+    public void newBaby(int interval) {
+        ActionListener lis = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(amountOfTeeth);
+                System.out.println("FNDSFNKDSNFKS");
+            }
+        };
+        Timer t = new Timer(interval, lis);
+        t.start();
+    }
 
-    public void start(int interval){
-        ActionListener listener = new crocodileBaby();
+    public void newBabyV2(int interval){
+        class babyCrocodile implements ActionListener{
+            public void actionPerformed(ActionEvent event){
+                System.out.println(amountOfTeeth);
+            }
+        }
+        ActionListener listener = new babyCrocodile();
         Timer t = new Timer(interval, listener);
         t.start();
     }
-         public class crocodileBaby implements ActionListener {
-            public void actionPerformed(ActionEvent event){
-                System.out.println("FNDSFNKDSNFKS");
-            }
-         }
+
+    public void newBabyV3(int interval){
+        Timer t = new Timer(interval, event -> System.out.println(amountOfTeeth));
+        t.start();
+    }
 
     public void actionPerformed(ActionEvent event){
-        System.out.println();
+        System.out.println("");
     }
 
 

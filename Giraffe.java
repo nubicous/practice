@@ -1,14 +1,16 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class Giraffe extends Animal {
+public class Giraffe extends Animal implements ActionListener {
     private double height;
 
     public double getHeight(){
         return height;
     }
 
-    public void setHeight(double h){this.height = height;}
+    public void setHeight(double h){this.height = h;}
 
     public Giraffe(String nameInEnglish, int years, int amountOfFood, double height) {
         super(nameInEnglish, years, amountOfFood);
@@ -16,8 +18,8 @@ public class Giraffe extends Animal {
         setHealth(200);
     }
 
-    public double makeBigger(){
-        setHeight(this.getHeight() + 1.0);
+    public double makeBigger(double grow){
+        setHeight(this.getHeight() + grow);
         return height;
     }
 
@@ -60,5 +62,34 @@ public class Giraffe extends Animal {
         return super.hashCode() + Objects.hash(height);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent event){
+        System.out.println("");
+    }
+
+    public static MasaiGiraffe giveBirth(String name, int age, int attack){
+        MasaiGiraffe masai = new MasaiGiraffe(name, age, attack);
+        masai.voice();
+        System.out.println("New masai giraffe was born");
+        return masai;
+    }
+
+
+    public static class MasaiGiraffe{
+        String name;
+        int age;
+        int attack;
+
+        public MasaiGiraffe(String n, int a, int at){
+            this.name = n;
+            this.age = a;
+            this.attack = at;
+        }
+
+        public void voice(){
+            System.out.println("ihaaaaaaaa");
+        }
+
+    }
 
 }
