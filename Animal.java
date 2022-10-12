@@ -7,6 +7,17 @@ public abstract class Animal {
     private int amountOfFood;
     private double health;
 
+    private boolean hasEaten = false;
+
+
+    public boolean isHasEaten() {
+        return hasEaten;
+    }
+
+    public void setHasEaten(boolean hasEaten) {
+        this.hasEaten = hasEaten;
+    }
+
     public void setHealth(double health){
         if(health < 0) this.setAlive(false);
         this.health = health;
@@ -67,8 +78,8 @@ public abstract class Animal {
 
     @Override
     public String toString(){
-        return getClass().getName() + "[name = " + nameInEnglish + ", years = " + years + "alive = " +
-                alive + "eats = " + amountOfFood + "health" + health + "]";
+        return getClass().getName() + "[name = " + nameInEnglish + ", years = " + years + ", alive = " +
+                alive + ", eats = " + amountOfFood + ", health = " + health + "]";
     }
 
     public abstract void feed();

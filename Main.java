@@ -32,16 +32,17 @@ public class Main {
         // newBabyV2() is a method implementing an inner class
         // newBabyV3() is method implementing same functionality as other versions of newBaby method with lambda statement
         Crocodile hermes2 = new Crocodile("Hermes", 6, 35, 20);
-        hermes2.newBaby(1000);
+        //hermes2.newBaby(1000);
 
         //implementing an ArrayList  with double curly braces, which is a use of inner class
         System.out.println(new ArrayList<>() {{ add("your"); add("mom"); add("gay");}});
 
         //implementation of abstract inner class, which overrides makeBigger() method in class Giraffe
         Giraffe baby = new Giraffe("Mariola", 1, 10, 2){
+            private final int growScale = 2;
             @Override
             public double makeBigger(double grow){
-                this.setHeight(getHeight() + (2 * grow));
+                this.setHeight(getHeight() + (growScale * grow));
                 return getHeight();
             }
         };
@@ -51,9 +52,14 @@ public class Main {
         //giraffe
         Giraffe.MasaiGiraffe masai = Giraffe.giveBirth("Witold", 10, 20);
 
+        //usage of ZooWorker class methods
+        ZooWorker worker = new ZooWorker();
+        hermes.feed();
+        System.out.println(worker.hasEaten(worker.getListOfAnimals(kleopatra, horace, alfred, hermes)));
+
         //stopping newBaby() method which is working until pressing "Zamknąć program?"
-        JOptionPane.showMessageDialog(null, "Zamknąć program?");
-        System.exit(0);
+        //JOptionPane.showMessageDialog(null, "Zamknąć program?");
+        //System.exit(0);
 
     }
 }
