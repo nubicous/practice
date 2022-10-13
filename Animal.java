@@ -4,7 +4,7 @@ public abstract class Animal {
     private final String nameInEnglish;
     private final int years;
     private boolean alive = true;
-    private int amountOfFood;
+    private double amountOfFood;
     private double health;
 
     private boolean hasEaten = false;
@@ -34,7 +34,7 @@ public abstract class Animal {
     public boolean isAlive() {
         return alive;
     }
-    public int getAmountOfFood() {
+    public double getAmountOfFood() {
         return amountOfFood;
     }
 

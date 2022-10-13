@@ -19,7 +19,7 @@ public class Crocodile extends Animal implements Comparable<Crocodile>, Predicat
 
     @Override
     public void feed(){
-        int foodUsage = getAmountOfFood();
+        double foodUsage = getAmountOfFood();
         if (getYears() < adult && !isHasEaten()) {
             foodUsage = getAmountOfFood() / 2;
         } else if (getYears() < youngish && !isHasEaten()) {
