@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class Crocodile extends Animal implements Comparable<Crocodile>, Predicate<Crocodile>, ActionListener {
-    private final int amountOfTeeth;
+    private int amountOfTeeth;
     final int adult = 6;
     final int youngish = 3;
 
@@ -15,30 +15,39 @@ public class Crocodile extends Animal implements Comparable<Crocodile>, Predicat
         setHealth(150);
     }
 
+    public void setAmountOfTeeth(int amount){
+        this.amountOfTeeth = amount;
+    }
 
-
-    @Override
-    public void feed(){
-        double foodUsage = getAmountOfFood();
-        if (getYears() < adult && !isHasEaten()) {
-            foodUsage = getAmountOfFood() / 2;
-        } else if (getYears() < youngish && !isHasEaten()) {
-            foodUsage = getAmountOfFood() / 4;
-        }
-        setHasEaten(true);
-        System.out.println("Crocodile has eaten" + foodUsage + " kg of meat");
+    public int getAmountOfTeeth() {
+        return amountOfTeeth;
     }
 
     @Override
-    public void attack(Animal a){
-        if(a.isAlive()) {
-            double damage = (amountOfTeeth / 2.0) * getYears();
-            a.setHealth(a.getHealth() - damage);
-            if (!a.isAlive()) {
-                System.out.println("Crocodile has killed" + a.getNameInEnglish());
-            }
-            System.out.println("Crocodile has dealt: " + damage + " damage to " + a.getNameInEnglish());
-        }else System.out.println("This animal is already dead!");
+    public double feed(){
+        double foodUsage = 0;
+        if (getYears() < youngish && !isHasEaten()) {
+            foodUsage = getAmountOfFood() / 4;
+        } else if (getYears() < adult && !isHasEaten()) {
+            foodUsage = getAmountOfFood() / 2;
+        }
+        setHasEaten(true);
+        System.out.println("Crocodile has eaten" + foodUsage + " kg of meat");
+        return foodUsage;
+    }
+
+    @Override
+    public double attack(Animal a)throws NullPointerException{
+            double damage = 0;
+            if (a.isAlive() && this.isAlive()) {
+                damage = (amountOfTeeth / 2.0) * getYears();
+                a.setHealth(a.getHealth() - damage);
+                if (!a.isAlive()) {
+                    System.out.println("Crocodile has killed" + a.getNameInEnglish());
+                }
+                System.out.println("Crocodile has dealt: " + damage + " damage to " + a.getNameInEnglish());
+            } else System.out.println("This animal is already dead!");
+            return damage;
     }
 
     @Override

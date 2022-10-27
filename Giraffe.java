@@ -1,9 +1,6 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
-import java.util.function.Consumer;
 
-public class Giraffe extends Animal implements ActionListener {
+public class Giraffe extends Animal {
     private double height;
 
     public double getHeight(){
@@ -24,18 +21,20 @@ public class Giraffe extends Animal implements ActionListener {
     }
 
     @Override
-    public void feed() {
-        int foodUsage = getAmountOfFood();
+    public double feed() {
+        double foodUsage = getAmountOfFood();
         if (getYears() < 3) {
             foodUsage = 0;
             System.out.println("It's a baby giraffe, it only drinks milk from its' mom. Food usage: " + foodUsage);
         }else System.out.println("Just a regular giraffe, which ate: " + foodUsage);
+        return foodUsage;
     }
 
     @Override
-    public void attack(Animal a){
-        if(a.isAlive()) {
-            double damage = height * getYears() / 2;
+    public double attack(Animal a){
+        double damage = 0;
+        if(a.isAlive() && this.isAlive()) {
+            damage = height * getYears() / 2;
             if (getHealth() < 50) {
                 damage += 20;
                 System.out.println("Giraffe kick its' enemy and deals: " + damage);
@@ -43,6 +42,7 @@ public class Giraffe extends Animal implements ActionListener {
             a.setHealth(a.getHealth() - damage);
             if(!a.isAlive()) System.out.println("Giraffe has killed " + a.getNameInEnglish());
         }
+        return damage;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Giraffe extends Animal implements ActionListener {
 
     @Override
     public String toString(){
-        return super.toString() + "[Teeth = " + height + "]";
+        return super.toString() + "[Height = " + height + "]";
     }
 
     @Override
@@ -62,10 +62,6 @@ public class Giraffe extends Animal implements ActionListener {
         return super.hashCode() + Objects.hash(height);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent event){
-        System.out.println("");
-    }
 
     public static MasaiGiraffe giveBirth(String name, int age, int attack){
         MasaiGiraffe masai = new MasaiGiraffe(name, age, attack);
@@ -80,14 +76,24 @@ public class Giraffe extends Animal implements ActionListener {
         int age;
         int attack;
 
-        public MasaiGiraffe(String n, int a, int at){
-            this.name = n;
-            this.age = a;
-            this.attack = at;
+        public MasaiGiraffe(String name, int years, int attack){
+            this.name = name;
+            this.age = years;
+            this.attack = attack;
         }
 
         public void voice(){
             System.out.println("ihaaaaaaaa");
+        }
+
+        @Override
+        public boolean equals(Object otherObject) {
+            if(this == otherObject) return true;
+            if(otherObject == null) return false;
+            if(!(otherObject instanceof MasaiGiraffe other)) return false;
+            return name.equalsIgnoreCase(other.name)
+                    && age == other.age
+                    && attack == other.attack;
         }
 
     }

@@ -39,9 +39,9 @@ public class Main {
 
         //implementation of abstract inner class, which overrides makeBigger() method in class Giraffe
         Giraffe baby = new Giraffe("Mariola", 1, 10, 2){
-            private final int growScale = 2;
             @Override
             public double makeBigger(double grow){
+                int growScale = 2;
                 this.setHeight(getHeight() + (growScale * grow));
                 return getHeight();
             }

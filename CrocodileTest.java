@@ -8,46 +8,60 @@ import static org.junit.jupiter.api.Assertions.*;
 class CrocodileTest {
 
     @Test
-    void test() {
-        Crocodile temp = new Crocodile("Stefan", 20, 40, 31);
-        assertTrue(temp.test(temp));
-    }
-
-    @Test
-    void compareTo(){
+    void testCompareToFirstSmaller(){
         Crocodile temp = new Crocodile("f", 20, 20, 20);
         Crocodile temp2 = new Crocodile("g", 21, 21, 21);
         assertEquals(-1, temp.compareTo(temp2));
-        temp.setAmountOfTeeth(21);
+    }
+
+    @Test
+    void testCompareToEqualAmountOfTeeth(){
+        Crocodile temp = new Crocodile("f", 20, 20, 20);
+        Crocodile temp2 = new Crocodile("g", 21, 21, 20);
         assertEquals(0, temp.compareTo(temp2));
-        temp.setAmountOfTeeth(22);
+    }
+
+    @Test
+    void testCompareToSecondSmaller(){
+        Crocodile temp = new Crocodile("f", 20, 20, 21);
+        Crocodile temp2 = new Crocodile("g", 21, 21, 20);
         assertEquals(1, temp.compareTo(temp2));
     }
 
+
     @Test
-    void feed(){
-        Crocodile temp = new Crocodile("B", 4, 21, 22);
-        double food1 = temp.getAmountOfFood();
-        assertEquals(food1/2, temp.feed());
-        temp.setYears(2);
-        temp.setHasEaten(false);
-        assertEquals(food1/4, temp.feed());
+    void testFeedWhenYoungish(){
+        Crocodile temp = new Crocodile("B", 2, 21, 22);
+        assertEquals(temp.getAmountOfFood() / 4.0, temp.feed());
     }
 
     @Test
-    void attack(){
-        Crocodile temp = new Crocodile("f", 20, 20, 2);
-        Crocodile temp1 = new Crocodile("g", 21, 21, 21);
-        double health = temp1.getHealth();
-        temp.attack(temp1);
-        assertEquals(health - temp1.getHealth(), (temp.getAmountOfTeeth() / 2.0) * temp.getYears());
-        temp.setAmountOfTeeth(200);
-        temp1.setHealth(health);
-        temp.attack(temp1);
-        assertFalse(temp1.isAlive());
-        temp1.setHealth(health);
-        temp.attack(temp1);
-        assertEquals(health, temp1.getHealth());
+    void testFeedWhenAdult(){
+        Crocodile temp = new Crocodile("B", 7, 21, 22);
+        assertEquals(temp.getAmountOfFood() / 2, temp.feed());
+    }
+
+    @Test
+    void testFeedWhenAlreadyEaten(){
+        Crocodile temp = new Crocodile("B", 7, 21, 22);
+        temp.setHasEaten(true);
+        assertEquals(0, temp.feed());
+    }
+
+    @Test
+    void testAttackWhenDead(){
+        Crocodile attacker = new Crocodile("B", 4, 21, 22);
+        Crocodile gettingBitUp = new Crocodile("o", 2, 21, 4);
+        attacker.setAlive(false);
+        assertEquals(0, attacker.attack(gettingBitUp));
+    }
+
+    @Test
+    void testAttackRegular(){
+        Crocodile attacker = new Crocodile("B", 4, 21, 22);
+        Crocodile gettingBitUp = new Crocodile("o", 2, 21, 4);
+        attacker.attack(gettingBitUp);
+        assertEquals(106, gettingBitUp.getHealth());
     }
 
     @Test
@@ -76,18 +90,24 @@ class CrocodileTest {
     }
 
     @Test
-    void testCompare(){
+    void testCompareWhenAmountOfTeethIsEqual(){
         Crocodile temp = new Crocodile("g", 21, 21, 21);
         Crocodile temp1 = new Crocodile("g", 21, 21, 21);
-        assertEquals(temp.compareTo(temp1), temp1.compare(temp));
+        assertEquals(0, temp.compare(temp1));
     }
 
     @Test
-    void testIsAdult(){
-        Crocodile temp = new Crocodile("g", 21, 21, 21);
+    void testCompareWhenAmountOfTeethIsSmaller(){
+        Crocodile temp = new Crocodile("g", 21, 21, 19);
         Crocodile temp1 = new Crocodile("g", 21, 21, 21);
-        assertEquals(temp.test(temp1), temp.isAdult(temp1));
+        assertEquals(-1, temp.compare(temp1));
     }
 
+    @Test
+    void testCompareWhenAmountOfTeethIsBigger(){
+        Crocodile temp = new Crocodile("g", 21, 21, 24);
+        Crocodile temp1 = new Crocodile("g", 21, 21, 21);
+        assertEquals(1, temp.compare(temp1));
+    }
 
 }

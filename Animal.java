@@ -1,8 +1,8 @@
 import java.util.Objects;
 
 public abstract class Animal {
-    private final String nameInEnglish;
-    private final int years;
+    private String nameInEnglish;
+    private int years;
     private boolean alive = true;
     private double amountOfFood;
     private double health;
@@ -10,6 +10,8 @@ public abstract class Animal {
     private boolean hasEaten = false;
 
 
+    public void setYears(int years){this.years = years;}
+    public void setNameInEnglish(String name){this.nameInEnglish = name;}
     public boolean isHasEaten() {
         return hasEaten;
     }
@@ -47,15 +49,11 @@ public abstract class Animal {
     }
 
 
+
     public Animal(String nameInEnglish, int years, int amountOfFood) {
         this.nameInEnglish = nameInEnglish;
         this.years = years;
         this.amountOfFood = amountOfFood;
-    }
-
-    public final void kill(){
-        if(alive) alive = false;
-        System.out.println(nameInEnglish + "has been killed!");
     }
 
     @Override
@@ -73,7 +71,6 @@ public abstract class Animal {
     @Override
     public int hashCode(){
         return Objects.hash(nameInEnglish, years, alive, amountOfFood, health);
-
     }
 
     @Override
@@ -82,6 +79,6 @@ public abstract class Animal {
                 alive + ", eats = " + amountOfFood + ", health = " + health + "]";
     }
 
-    public abstract void feed();
-    public abstract void attack(Animal a);
+    public abstract double feed();
+    public abstract double attack(Animal a);
 }

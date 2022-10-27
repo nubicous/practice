@@ -7,54 +7,67 @@ import static org.junit.jupiter.api.Assertions.*;
 class GiraffeTest {
 
     @Test
-    void getHeight() {
+    void testMakeBiggerWorks() {
         Giraffe temp = new Giraffe("G", 20, 30, 6);
-        assertEquals(6, temp.getHeight());
+        assertEquals(8, temp.makeBigger(2));
     }
 
     @Test
-    void setHeight() {
-        Giraffe temp = new Giraffe("G", 20, 30, 6);
-        temp.setHeight(7);
-        assertEquals(7, temp.getHeight());
-    }
-
-    @Test
-    void makeBigger() {
-        Giraffe temp = new Giraffe("G", 20, 30, 6);
-        int grow = 2;
-        assertEquals(temp.getHeight() + grow, temp.makeBigger(2));
-    }
-
-    @Test
-    void feed() {
-        Giraffe temp = new Giraffe("G", 20, 30, 6);
-        assertEquals(30, temp.feed());
-        temp.setYears(2);
+    void feedWhenBelow3Years() {
+        Giraffe temp = new Giraffe("G", 2, 30, 6);
         assertEquals(0, temp.feed());
     }
 
     @Test
-    void attack() {
-        Giraffe temp = new Giraffe("G", 20, 30, 6);
-        Giraffe temp1 = new Giraffe("O", 20, 30, 7);
-        double health = temp1.getHealth();
-        temp.attack(temp1);
-        assertEquals(health - (temp.getHeight()*(temp.getYears())/(2)), temp1.getHealth());
-        temp.setHealth(40);
-        temp1.setHealth(health);
-        temp.attack(temp1);
-        assertEquals(health - ((temp.getHeight()*(temp.getYears())/(2)) + 20), temp1.getHealth());
+    void feedWhenOver3Years() {
+        Giraffe temp = new Giraffe("G", 5, 30, 6);
+        assertEquals(temp.getAmountOfFood(), temp.feed());
     }
 
     @Test
-    void testEquals() {
+    void testAttackWithOutCritCorrectDamage(){
+        Giraffe attacker = new Giraffe("G", 20, 30, 6);
+        Giraffe gettingBitUp = new Giraffe("O", 20, 30, 7);
+        attacker.attack(gettingBitUp);
+        assertEquals(140, gettingBitUp.getHealth());
+    }
+
+    @Test
+    void testAttackWithCritCorrectDamage(){
+        Giraffe attacker = new Giraffe("G", 20, 30, 6);
+        Giraffe gettingBitUp = new Giraffe("O", 20, 30, 7);
+        attacker.setHealth(49);
+        attacker.attack(gettingBitUp);
+        assertEquals(120, gettingBitUp.getHealth());
+    }
+
+    @Test
+    void testAttackWhenAttackerIsDead(){
+        Giraffe attacker = new Giraffe("G", 20, 30, 6);
+        Giraffe gettingBitUp = new Giraffe("O", 20, 30, 7);
+        attacker.setAlive(false);
+        assertEquals(0, attacker.attack(gettingBitUp));
+    }
+
+    @Test
+    void testAttackWhenGettingBitUpIsDead(){
+        Giraffe attacker = new Giraffe("G", 20, 30, 6);
+        Giraffe gettingBitUp = new Giraffe("O", 20, 30, 7);
+        gettingBitUp.setAlive(false);
+        assertEquals(0, attacker.attack(gettingBitUp));
+    }
+
+    @Test
+    void testEqualsSameHeight() {
         Giraffe temp = new Giraffe("O", 21, 21, 21);
         Giraffe temp1 = new Giraffe("O", 21, 21, 21);
         assertTrue(temp.equals(temp1));
-        temp.setHeight(2);
-        assertFalse(temp.equals(temp1));
-        temp.setYears(2);
+    }
+
+    @Test
+    void testEqualsDifferentHeight() {
+        Giraffe temp = new Giraffe("O", 21, 21, 21);
+        Giraffe temp1 = new Giraffe("O", 21, 21, 4);
         assertFalse(temp.equals(temp1));
     }
 
@@ -74,8 +87,22 @@ class GiraffeTest {
     }
 
     @Test
-    void giveBirth() {
+    void testGiveBirth() {
         Giraffe.MasaiGiraffe g = new Giraffe.MasaiGiraffe("O", 20, 50);
         assertEquals(g, Giraffe.giveBirth("O", 20, 50));
+    }
+
+    @Test
+    void testEqualsMasaiGiraffeDifferentParameters(){
+        Giraffe.MasaiGiraffe temp = new Giraffe.MasaiGiraffe("O", 10, 30);
+        Giraffe.MasaiGiraffe temp1 = new Giraffe.MasaiGiraffe("G", 10, 30);
+        assertFalse(temp.equals(temp1));
+    }
+
+    @Test
+    void testEqualsMasaiGiraffeDifferentClassParameter(){
+        Giraffe.MasaiGiraffe temp = new Giraffe.MasaiGiraffe("O", 10, 30);
+        Giraffe temp1 = new Giraffe("O", 20, 25, 6);
+        assertFalse(temp.equals(temp1));
     }
 }
